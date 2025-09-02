@@ -5,10 +5,12 @@ import com.ahmad.jobBoard.model.enums.Industry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @Entity
 @Data
 @AllArgsConstructor

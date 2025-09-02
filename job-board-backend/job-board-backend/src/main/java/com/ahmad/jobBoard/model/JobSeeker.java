@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

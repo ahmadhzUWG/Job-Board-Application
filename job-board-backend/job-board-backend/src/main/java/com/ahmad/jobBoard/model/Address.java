@@ -1,23 +1,21 @@
 package com.ahmad.jobBoard.model;
 
 import com.ahmad.jobBoard.model.enums.State;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
-@Entity
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
 public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotBlank
     @Column(nullable = false)
@@ -36,7 +34,6 @@ public class Address {
 
     @NotBlank
     @Column(nullable = false)
+    @Size(min = 5, max = 5)
     private String zip;
-
-
 }
