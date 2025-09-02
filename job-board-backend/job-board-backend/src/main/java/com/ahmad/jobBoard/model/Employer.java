@@ -1,6 +1,7 @@
-package com.ahmad.jobBoard;
+package com.ahmad.jobBoard.model;
 
 
+import com.ahmad.jobBoard.model.enums.Industry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

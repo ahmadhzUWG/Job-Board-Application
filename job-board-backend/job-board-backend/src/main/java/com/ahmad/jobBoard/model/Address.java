@@ -1,12 +1,12 @@
-package com.ahmad.jobBoard;
+package com.ahmad.jobBoard.model;
 
+import com.ahmad.jobBoard.model.enums.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Entity
 @Data
@@ -31,7 +31,7 @@ public class Address {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "state", nullable = false)
     private State state;
 
     @NotBlank

@@ -1,5 +1,6 @@
-package com.ahmad.jobBoard;
+package com.ahmad.jobBoard.model;
 
+import com.ahmad.jobBoard.model.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class JobSeeker extends User {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "gender", nullable = false)
     private Gender gender;
 
     private String description;

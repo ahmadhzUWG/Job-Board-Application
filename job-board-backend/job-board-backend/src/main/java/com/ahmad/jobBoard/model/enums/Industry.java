@@ -1,4 +1,4 @@
-package com.ahmad.jobBoard;
+package com.ahmad.jobBoard.model.enums;
 
 public enum Industry {
     TECHNOLOGY,

@@ -1,5 +1,6 @@
-package com.ahmad.jobBoard;
+package com.ahmad.jobBoard.model;
 
+import com.ahmad.jobBoard.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @MappedSuperclass
 @Data
@@ -25,6 +25,7 @@ public abstract class User {
     @Column(nullable = false)
     private String name;
 
+    @NotNull
     @Embedded
     private Address address;
 
@@ -49,8 +50,8 @@ public abstract class User {
     private String password; //hashed
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private Role role;
 
     private String profileImageUrl;
