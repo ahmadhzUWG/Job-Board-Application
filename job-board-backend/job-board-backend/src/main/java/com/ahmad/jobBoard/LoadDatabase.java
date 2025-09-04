@@ -9,29 +9,25 @@ import com.ahmad.jobBoard.repository.JobSeekerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-import java.rmi.Remote;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
-    @Bean
+    //@Bean
     CommandLineRunner initDatabase(EmployerRepository employerRepo, JobSeekerRepository jobSeekerRepo, JobRepository jobRepo, JobApplicationRepository jobAppRepo) {
 
         return args -> {
             Address address1 = createAddress("915 West Ave", "Atlanta", State.GA, "30339");
             JobAddress address2 = createJobAddress("223 Cumberland St", "Lawrenceville", State.GA, "30339");
             Employer employer1 = createEmployer("Tech Corp", address1, "123-456-7890", "hr@techcorp.com"
-                                                , "username1", "password", Role.EMPLOYER, "Leading tech company"
-                                                , Industry.TECHNOLOGY, new ArrayList<>());
+                    , "username1", "password", Role.EMPLOYER, "Leading tech company"
+                    , Industry.TECHNOLOGY, new ArrayList<>());
             Employer employer2 = createEmployer("BestieIn", address1, "143-456-7890", "hr@bestin.com"
                     , "username2", "password", Role.EMPLOYER, "Leading food company"
                     , Industry.TECHNOLOGY, new ArrayList<>());
@@ -43,15 +39,15 @@ public class LoadDatabase {
             Address address3 = createAddress("414 Central Dr", "Decatur", State.GA, "30455");
             address2.setAddress2("Apt 112");
             JobSeeker jobSeeker1 = createJobSeeker("Ahmad Hammett", address3, "987-654-3210", "test@gmail.com"
-                                                    , "username3", "password", Role.JOBSEEKER, 22, Gender.MALE);
+                    , "username3", "password", Role.JOBSEEKER, 22, Gender.MALE);
             JobApplication jobApp1 = createJobApplication(job1, jobSeeker1, ApplicationStatus.APPLIED);
 
-            log.info("Preloading " + employerRepo.save(employer2));
-            log.info("Preloading " + jobRepo.save(job2));
-            log.info("Preloading " + employerRepo.save(employer1));
-            log.info("Preloading " + jobRepo.save(job1));
-            log.info("Preloading " + jobSeekerRepo.save(jobSeeker1));
-            log.info("Preloading " + jobAppRepo.save(jobApp1));
+            log.info("Preloading {}", employerRepo.save(employer2));
+            log.info("Preloading {}", jobRepo.save(job2));
+            log.info("Preloading {}", employerRepo.save(employer1));
+            log.info("Preloading {}", jobRepo.save(job1));
+            log.info("Preloading {}", jobSeekerRepo.save(jobSeeker1));
+            log.info("Preloading {}", jobAppRepo.save(jobApp1));
         };
     }
 
@@ -93,7 +89,7 @@ public class LoadDatabase {
     }
 
     private static Employer createEmployer(String name, Address address, String phoneNum, String email, String username
-                                            , String password, Role role, String desc, Industry industry, List<Job> postedJobs) {
+            , String password, Role role, String desc, Industry industry, List<Job> postedJobs) {
         return Employer.builder()
                 .name(name)
                 .address(address)

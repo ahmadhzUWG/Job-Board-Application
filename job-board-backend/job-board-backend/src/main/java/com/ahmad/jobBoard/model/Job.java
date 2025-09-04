@@ -1,7 +1,7 @@
 package com.ahmad.jobBoard.model;
 
 import com.ahmad.jobBoard.model.enums.EmploymentType;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -58,6 +59,10 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "employer_id")
     private Employer employer;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<JobApplication> applications;
 
     @AssertTrue(message = "Address must be provided if job is not remote")
     private boolean isAddressValid() {

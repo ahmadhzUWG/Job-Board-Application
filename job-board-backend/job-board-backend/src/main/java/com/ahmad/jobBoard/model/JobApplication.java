@@ -1,7 +1,7 @@
 package com.ahmad.jobBoard.model;
 
 import com.ahmad.jobBoard.model.enums.ApplicationStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,11 +26,13 @@ public class JobApplication {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
+    @JsonBackReference
     private Job job;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "applicant_id", nullable = false)
+    @JsonBackReference
     private JobSeeker applicant;
 
     @NotNull

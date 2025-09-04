@@ -1,11 +1,19 @@
 package com.ahmad.jobBoard.model;
 
 import com.ahmad.jobBoard.model.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -20,12 +28,15 @@ public class JobSeeker extends User {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
+    @Column(nullable = false)
     private Gender gender;
 
     private String description;
 
     private String resumeUrl;
 
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<JobApplication> applications;
 
 }
