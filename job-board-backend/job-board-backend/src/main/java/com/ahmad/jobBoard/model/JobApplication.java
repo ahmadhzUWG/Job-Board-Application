@@ -26,13 +26,11 @@ public class JobApplication {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "job_id", nullable = false)
-    @JsonBackReference
     private Job job;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "applicant_id", nullable = false)
-    @JsonBackReference
     private JobSeeker applicant;
 
     @NotNull
@@ -42,6 +40,6 @@ public class JobApplication {
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime appliedDate;
 }

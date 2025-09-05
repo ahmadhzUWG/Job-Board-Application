@@ -48,21 +48,17 @@ public class Job {
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime postedDate;
 
     @NotNull
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime closingDate;
 
     @ManyToOne
     @JoinColumn(name = "employer_id")
     private Employer employer;
-
-    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<JobApplication> applications;
 
     @AssertTrue(message = "Address must be provided if job is not remote")
     private boolean isAddressValid() {

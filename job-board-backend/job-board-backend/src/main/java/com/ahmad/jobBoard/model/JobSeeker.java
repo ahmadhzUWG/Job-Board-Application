@@ -34,9 +34,4 @@ public class JobSeeker extends User {
     private String description;
 
     private String resumeUrl;
-
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<JobApplication> applications;
-
 }

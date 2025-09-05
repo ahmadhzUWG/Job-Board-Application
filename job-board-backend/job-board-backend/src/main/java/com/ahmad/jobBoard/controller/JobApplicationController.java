@@ -3,13 +3,12 @@ package com.ahmad.jobBoard.controller;
 import com.ahmad.jobBoard.model.JobApplication;
 import com.ahmad.jobBoard.service.JobApplicationService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/job-applications")
@@ -27,12 +26,18 @@ public class JobApplicationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<JobApplication>> getJobApplication(@PathVariable Long id) {
-        return new ResponseEntity<>(jobApplicationService.findJobApplication(id), HttpStatus.OK);
+    public ResponseEntity<JobApplication> getJobApplication(@PathVariable Long id) {
+        return jobApplicationService.findJobApplication(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<JobApplication> createJobApplication(@Valid @RequestBody JobApplication jobApplication) {
+    public ResponseEntity<JobApplication> createJobApplication(@Valid @RequestBody JobApplication jobApplication, Errors errors) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return new ResponseEntity<>(jobApplicationService.createJobApplication(jobApplication), HttpStatus.CREATED);
     }
 

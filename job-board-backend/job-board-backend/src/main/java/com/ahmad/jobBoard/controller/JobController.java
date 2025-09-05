@@ -5,6 +5,7 @@ import com.ahmad.jobBoard.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,18 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Job>> getJob(@PathVariable Long id) {
-        return new ResponseEntity<>(jobService.findJob(id), HttpStatus.OK);
+    public ResponseEntity<Job> getJob(@PathVariable Long id) {
+        return jobService.findJob(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Job> createJob(@Valid @RequestBody Job job) {
+    public ResponseEntity<Job> createJob(@Valid @RequestBody Job job, Errors errors) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return new ResponseEntity<>(jobService.createJob(job), HttpStatus.CREATED);
     }
 

@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > User</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ahmad.jobBoard.model</a>
+</div>
+
+<h1>Coverage Summary for Class: User (com.ahmad.jobBoard.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">User</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ahmad.jobBoard.model;
+&nbsp;
+&nbsp;import com.ahmad.jobBoard.model.enums.Role;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnore;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import jakarta.persistence.*;
+&nbsp;import jakarta.validation.constraints.Email;
+&nbsp;import jakarta.validation.constraints.NotBlank;
+&nbsp;import jakarta.validation.constraints.NotNull;
+&nbsp;import jakarta.validation.constraints.Size;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Data;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;import lombok.experimental.SuperBuilder;
+&nbsp;
+&nbsp;@MappedSuperclass
+&nbsp;@Data
+&nbsp;@SuperBuilder
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;public abstract class User {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    @Column(nullable = false)
+&nbsp;    private String name;
+&nbsp;
+&nbsp;    @NotNull
+&nbsp;    @Embedded
+&nbsp;    private Address address;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    @Column(nullable = false)
+&nbsp;    private String phoneNumber;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    @Column(nullable = false)
+&nbsp;    @Email(message = &quot;Email must be valid&quot;)
+&nbsp;    private String email;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    @Column(nullable = false, unique = true)
+&nbsp;    @Size(min = 5, message = &quot;Username must be at least 5 characters&quot;)
+&nbsp;    private String username;
+&nbsp;
+&nbsp;    @NotBlank
+&nbsp;    @Column(nullable = false)
+&nbsp;    @Size(min = 8, message = &quot;Password must be at least 8 characters&quot;)
+&nbsp;    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+&nbsp;    private String password; //hashed
+&nbsp;
+&nbsp;    @NotNull
+&nbsp;    @Enumerated(EnumType.STRING)
+&nbsp;    @Column(name = &quot;role&quot;, nullable = false)
+&nbsp;    private Role role;
+&nbsp;
+&nbsp;    private String profileImageUrl;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-09-05 04:24</div>
+</div>
+</body>
+</html>

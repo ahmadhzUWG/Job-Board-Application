@@ -100,7 +100,6 @@ public class LoadDatabase {
                 .role(role)
                 .description(desc)
                 .industry(industry)
-                .postedJobs(postedJobs)
                 .build();
     }
 

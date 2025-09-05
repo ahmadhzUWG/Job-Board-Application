@@ -2,9 +2,11 @@ package com.ahmad.jobBoard.controller;
 
 import com.ahmad.jobBoard.model.JobSeeker;
 import com.ahmad.jobBoard.service.JobSeekerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +28,17 @@ public class JobSeekerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<JobSeeker>> getJobSeeker(@PathVariable Long id) {
-        return new ResponseEntity<>(jobSeekerService.findJobSeeker(id), HttpStatus.OK);
+    public ResponseEntity<JobSeeker> getJobSeeker(@PathVariable Long id) {
+        return jobSeekerService.findJobSeeker(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<JobSeeker> createJobSeeker(@RequestBody JobSeeker jobSeeker) {
+    public ResponseEntity<JobSeeker> createJobSeeker(@Valid @RequestBody JobSeeker jobSeeker, Errors errors) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
         return new ResponseEntity<>(jobSeekerService.createJobSeeker(jobSeeker), HttpStatus.CREATED);
     }
 
