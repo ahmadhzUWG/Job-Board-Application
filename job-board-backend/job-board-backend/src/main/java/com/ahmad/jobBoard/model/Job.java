@@ -56,6 +56,7 @@ public class Job {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime closingDate;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "employer_id")
     private Employer employer;
