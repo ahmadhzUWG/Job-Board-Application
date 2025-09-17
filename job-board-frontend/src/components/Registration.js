@@ -3,6 +3,8 @@ import { useState } from "react";
 import { app } from "../auth/firebase";
 import { getAuth } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
+import Typewriter from "./typewritter.tsx";
+import "./Registration.css";
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -47,50 +49,80 @@ function Registration() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="text-center">
-        <img
-          src="/job-board-logo.png"
-          alt="Job Board"
-          style={{ maxWidth: "400px", marginBottom: "20px", borderRadius: "8px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)" }}
-        />
+    <div>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="text-center">
 
-        <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
-          <form className="form-group" onSubmit={HandleLogin}>
-            <input
-              className="form-control mb-2"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+          {/* Content */}
+          <div className="d-flex flex-column align-items-center text-center px-3 py-4">
+
+            {/* Typewriter Effect */}
+            <Typewriter
+              text={[
+                "Discover Jobs and Unlock Your Potential",
+                "Connect with Top Employers",
+                "Your Dream Job Awaits"
+              ]}
+              speed={65}
+              waitTime={2000}
+              deleteSpeed={50}
+              initialDelay={100}
+              cursorChar={"|"}
+              className="custom-typewriter mb-4"
             />
-            <input
-              className="form-control"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+
+            {/* Logo */}
+            <img
+              src="/assets/job-board-logo.png"
+              alt="Job Board"
+              className="img-fluid"
+              style={{
+                maxWidth: "400px",
+                borderRadius: "8px",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                opacity: 0.9,
+                marginBottom: "20px"
+              }}
             />
-            <button className="btn w-100 mb-2 mt-2" style={{backgroundColor: window.PRIMARY_COLOR, color: window.SECONDARY_COLOR}} type="submit">
-              Log in
-            </button>
-          </form>
 
-          <button
-            className="btn btn-primary w-100 mb-2" style={{backgroundColor: window.PRIMARY_COLOR, color: window.SECONDARY_COLOR}}
-            onClick={() => HandleSignUp()}
-          >
-            Sign up
-          </button>
-          <button
-            className="btn btn-primary w-100" style={{backgroundColor: window.COMPLEMENTARY_COLOR, color: window.PRIMARY_COLOR, borderColor: window.PRIMARY_COLOR}}
-            onClick={() => HandleGoogleLogIn()}
-          >
-            <FcGoogle size={20} className="me-2" />
-            Sign in with Google
-          </button>
+            {/* Form Card */}
+            <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%", backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '10px' }}>
+              <form className="form-group" onSubmit={HandleLogin}>
+                <input
+                  className="form-control mb-2"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  className="form-control"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button className="btn w-100 mb-2 mt-2" style={{ backgroundColor: window.PRIMARY_COLOR, color: "#FFFFFF" }} type="submit">
+                  Log in
+                </button>
+              </form>
+              <button
+                className="btn btn-primary w-100 mb-2" style={{ backgroundColor: window.PRIMARY_COLOR, color:  "#FFFFFF" }}
+                onClick={() => HandleSignUp()}
+              >
+                Sign up
+              </button>
+              <button
+                className="btn btn-primary w-100" style={{ backgroundColor: window.COMPLEMENTARY_COLOR, color: window.PRIMARY_COLOR, borderColor: window.PRIMARY_COLOR }}
+                onClick={() => HandleGoogleLogIn()}
+              >
+                <FcGoogle size={20} className="me-2" />
+                Sign in with Google
+              </button>
+              {error && <small className="alert alert-danger mt-4">{error}</small>}
+            </div>
 
-          {error && <small className="alert alert-danger mt-4">{error}</small>}
+          </div>
         </div>
       </div>
     </div>

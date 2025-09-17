@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 window.PRIMARY_COLOR = "#042341";
-window.SECONDARY_COLOR = "#FFFFFF";
 window.COMPLEMENTARY_COLOR = "#F2F3F2";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

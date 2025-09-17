@@ -3,11 +3,11 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 
 function AppNavbar() {
   return (
-    <Navbar style={{backgroundColor: window.PRIMARY_COLOR}} className="navbar-dark" expand="lg">
+    <Navbar style={{backgroundColor: "#041a31b0"}} className="navbar-dark" expand="lg">
       <Container>
         <Navbar.Brand href="/" style={{ color: "white" }}>
           <img
-            src="/job-board-logo.png"
+            src="/assets/job-board-logo.png"
             alt="Job Board"
             height="40"
             className="d-inline-block align-top me-2"

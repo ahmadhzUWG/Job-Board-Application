@@ -27,6 +27,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+          <div>
+            <video loop autoPlay muted style={{ width: "100vw", height: "100vh", objectFit: "cover", position: "fixed", top: 0, left: 0, zIndex: -1 }}>
+              <source src="/assets/home-landing.mp4" type="video/mp4" />
+            </video>
+          </div>
       <AppNavbar/>
         <Routes>
           <Route path="/" element={
@@ -34,7 +39,7 @@ function App() {
               <Registration />
             </>
           } />
-          <Route path="/home" element={
+          <Route path="/jobs" element={
             <>
               <h1 className='text-center'>Job Board</h1>
               {jobs?.map((job) => (<JobCard key={job.id} job={job} />))}
