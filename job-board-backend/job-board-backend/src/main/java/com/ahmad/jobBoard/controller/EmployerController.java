@@ -26,9 +26,9 @@ public class EmployerController {
         return new ResponseEntity<>(employerService.allEmployers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Employer> getEmployer(@PathVariable Long id) {
-        return employerService.findEmployer(id)
+    @GetMapping("/{email}")
+    public ResponseEntity<Employer> getEmployerByEmail(@PathVariable  String email) {
+        return employerService.findEmployerByEmail(email)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

@@ -1,10 +1,13 @@
 import './App.css';
-import JobCard from './components/JobCard';
+import JobBoard from './components/JobBoard';
 import api from './api/axiosConfig';
 import { useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Registration from './components/Registration';
+import Welcome from './components/Welcome';
 import AppNavbar from './components/AppNavbar';
+import BackgroundVideo from './components/BackgroundVideo';
+import Footer from './components/Footer';
+import Registration from './components/Registration';
 
 function App() {
 
@@ -25,28 +28,22 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <BrowserRouter>
-          <div>
-            <video loop autoPlay muted style={{ width: "100vw", height: "100vh", objectFit: "cover", position: "fixed", top: 0, left: 0, zIndex: -1 }}>
-              <source src="/assets/home-landing.mp4" type="video/mp4" />
-            </video>
-          </div>
-      <AppNavbar/>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Registration />
-            </>
-          } />
-          <Route path="/jobs" element={
-            <>
-              <h1 className='text-center'>Job Board</h1>
-              {jobs?.map((job) => (<JobCard key={job.id} job={job} />))}
-            </>
-          } />
-        </Routes>
-      </BrowserRouter>
+    <div className="d-flex flex-column min-vh-100">
+      <main className="flex-grow-1">
+        <BackgroundVideo />
+        <AppNavbar />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/jobs" element={<JobBoard jobs={jobs} />} />
+            <Route path="/about" element={<div className='text-center mt-5 text-light fs-1'><h1>About Page</h1><p>This is a job board application built with React and Firebase.</p></div>} />
+            <Route path="/registration" element={<Registration />} />
+            <Route path="*" element={<div className='text-center mt-5 text-light fs-1'><h1>404 Not Found</h1><p>The page you are looking for does not exist.</p></div>} />
+          </Routes>
+        </BrowserRouter>
+      </main>
+
+      <Footer />
     </div>
   );
 }

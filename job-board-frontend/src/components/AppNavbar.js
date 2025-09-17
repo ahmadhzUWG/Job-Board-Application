@@ -3,7 +3,7 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 
 function AppNavbar() {
   return (
-    <Navbar style={{backgroundColor: "#041a31b0"}} className="navbar-dark" expand="lg">
+    <Navbar sticky="top" style={{backgroundColor: "#041a31b0"}} className="navbar-dark" expand="lg">
       <Container>
         <Navbar.Brand href="/" style={{ color: "white" }}>
           <img

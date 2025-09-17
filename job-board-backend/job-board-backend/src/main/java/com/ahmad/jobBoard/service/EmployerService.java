@@ -24,6 +24,8 @@ public class EmployerService {
         return employerRepository.findById(id);
     }
 
+    public Optional<Employer> findEmployerByEmail(String email) { return employerRepository.findByEmail(email); }
+
     public Employer createEmployer(Employer employer) { return employerRepository.save(employer); }
 
     public void deleteEmployer(Long id) { employerRepository.deleteById(id); }

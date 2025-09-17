@@ -25,6 +25,8 @@ public class JobSeekerService {
         return jobSeekerRepository.findById(id);
     }
 
+    public Optional<JobSeeker> findJobSeekerByEmail(String email) { return  jobSeekerRepository.findByEmail(email); }
+
     public JobSeeker createJobSeeker(JobSeeker jobSeeker) { return jobSeekerRepository.save(jobSeeker); }
 
     public void deleteJobSeeker(Long id) { jobSeekerRepository.deleteById(id); }

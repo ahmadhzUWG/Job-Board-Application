@@ -37,7 +37,7 @@ public abstract class User {
     private String phoneNumber;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Email(message = "Email must be valid")
     private String email;
 
