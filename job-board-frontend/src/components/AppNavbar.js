@@ -1,5 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { app } from "../auth/firebase.js";
+import { getAuth } from "firebase/auth";
 
 function AppNavbar() {
   return (
@@ -22,9 +24,21 @@ function AppNavbar() {
             <Nav.Link href="/" style={{ color: "white" }}>Home</Nav.Link>
             <Nav.Link href="/jobs" style={{ color: "white" }}>Jobs</Nav.Link>
             <Nav.Link href="/about" style={{ color: "white" }}>About</Nav.Link>
-            <Button className="mt-2 ms-0 ms-md-3 d-flex align-items-center justify-content-center" style={{maxWidth: "200px", width: "100%", maxHeight: "30px", height: "100%", backgroundColor: window.COMPLEMENTARY_COLOR, color: window.PRIMARY_COLOR}} href="/">
-              Login
-            </Button>
+            {
+              getAuth().currentUser
+              &&
+              <Button className="mt-2 ms-0 ms-md-3 d-flex align-items-center justify-content-center" style={{ maxWidth: "200px", width: "100%", maxHeight: "30px", height: "100%", backgroundColor: window.COMPLEMENTARY_COLOR, color: window.PRIMARY_COLOR }}
+                onClick={() => {
+                  const auth = getAuth(app);
+                  auth.signOut().then(() =>
+                    window.location.reload()
+                  ).catch((error) =>
+                    console.error("Error signing out:", error));
+                }}>
+                Sign Out
+              </Button>
+            }
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
