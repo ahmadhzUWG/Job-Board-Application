@@ -67,8 +67,8 @@ export async function ValidateSignup(email, password, setError) {
     return false;
   }
 
-  if (password.length < 6) {
-    setError("Password is too weak. Use at least 6 characters.");
+  if (password.length < 8) {
+    setError("Password is too weak. Use at least 8 characters.");
     return false;
   }
 

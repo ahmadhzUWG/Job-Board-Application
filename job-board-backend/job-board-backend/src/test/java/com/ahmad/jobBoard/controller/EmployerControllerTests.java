@@ -54,7 +54,6 @@ public class EmployerControllerTests {
                 .phoneNumber("123-456-7890")
                 .name("Test Company")
                 .industry(Industry.TECHNOLOGY)
-                .username("username123")
                 .password("password123")
                 .build();
     }
@@ -92,7 +91,6 @@ public class EmployerControllerTests {
                 {
                   "id": 1,
                   "name": "Test Company",
-                  "username": "username123",
                   "password": "password123",
                   "email": "test123@gmail.com",
                   "phoneNumber": "123-456-7890",
@@ -113,7 +111,6 @@ public class EmployerControllerTests {
         when(employerService.createEmployer(any(Employer.class))).thenReturn(new Employer() {{
             setId(1L);
             setName("Test Company");
-            setUsername("username123");
             setEmail("test123@gmail.com");
             setPhoneNumber("123-456-7890");
             setRole(Role.EMPLOYER);
@@ -143,7 +140,6 @@ public class EmployerControllerTests {
                 {
                   "id": 1,
                   "name": "",
-                  "username": "username123",
                   "password": "password123",
                   "email": "test123@gmail.com",
                   "phoneNumber": "123-456-7890",

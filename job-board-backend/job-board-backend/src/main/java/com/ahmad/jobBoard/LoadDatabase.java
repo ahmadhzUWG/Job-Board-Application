@@ -26,10 +26,10 @@ public class LoadDatabase {
             Address address1 = createAddress("915 West Ave", "Atlanta", State.GA, "30339");
             JobAddress address2 = createJobAddress("223 Cumberland St", "Lawrenceville", State.GA, "30339");
             Employer employer1 = createEmployer("Tech Corp", address1, "123-456-7890", "hr@techcorp.com"
-                    , "username1", "password", Role.EMPLOYER, "Leading tech company"
+                    , "password", Role.EMPLOYER, "Leading tech company"
                     , Industry.TECHNOLOGY, new ArrayList<>());
             Employer employer2 = createEmployer("BestieIn", address1, "143-456-7890", "hr@bestin.com"
-                    , "username2", "password", Role.EMPLOYER, "Leading food company"
+                    , "password", Role.EMPLOYER, "Leading food company"
                     , Industry.TECHNOLOGY, new ArrayList<>());
             Job job1 = createJob("Java Developer", "Develop enterprise-level Java applications.", null, true,
                     90000, EmploymentType.FULL_TIME, LocalDateTime.now().plusMonths(1), employer1);
@@ -39,7 +39,7 @@ public class LoadDatabase {
             Address address3 = createAddress("414 Central Dr", "Decatur", State.GA, "30455");
             address2.setAddress2("Apt 112");
             JobSeeker jobSeeker1 = createJobSeeker("Ahmad Hammett", address3, "987-654-3210", "test@gmail.com"
-                    , "username3", "password", Role.JOBSEEKER, 22, Gender.MALE);
+                    , "password", Role.JOBSEEKER, 22, Gender.MALE);
             JobApplication jobApp1 = createJobApplication(job1, jobSeeker1, ApplicationStatus.APPLIED);
 
             log.info("Preloading {}", employerRepo.save(employer2));
@@ -73,14 +73,13 @@ public class LoadDatabase {
                 .build();
     }
 
-    private static JobSeeker createJobSeeker(String name, Address address, String phoneNum, String email, String username
+    private static JobSeeker createJobSeeker(String name, Address address, String phoneNum, String email
             , String password, Role role, int age, Gender gender) {
         return JobSeeker.builder()
                 .name(name)
                 .address(address)
                 .phoneNumber(phoneNum)
                 .email(email)
-                .username(username)
                 .password(password)
                 .role(role)
                 .age(age)
@@ -88,14 +87,13 @@ public class LoadDatabase {
                 .build();
     }
 
-    private static Employer createEmployer(String name, Address address, String phoneNum, String email, String username
+    private static Employer createEmployer(String name, Address address, String phoneNum, String email
             , String password, Role role, String desc, Industry industry, List<Job> postedJobs) {
         return Employer.builder()
                 .name(name)
                 .address(address)
                 .phoneNumber(phoneNum)
                 .email(email)
-                .username(username)
                 .password(password)
                 .role(role)
                 .description(desc)

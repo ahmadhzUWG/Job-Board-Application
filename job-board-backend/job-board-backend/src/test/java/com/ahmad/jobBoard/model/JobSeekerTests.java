@@ -48,7 +48,6 @@ public class JobSeekerTests {
                 .role(Role.JOBSEEKER)
                 .address(address)
                 .phoneNumber("123-456-7890")
-                .username("johndoe123")
                 .password("password123")
                 .age(25)
                 .gender(Gender.MALE)
@@ -88,14 +87,6 @@ public class JobSeekerTests {
         assertHasViolation(seeker, "password");
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = "abc")
-    void invalidUsername_shouldFailValidation(String username) {
-        JobSeeker seeker = (JobSeeker) baseBuilder().username(username).build();
-        assertHasViolation(seeker, "username");
-    }
-
     @Test
     void invalidAddress_shouldFailValidation() {
         JobSeeker seeker = (JobSeeker) baseBuilder().address(null).build();
@@ -129,7 +120,6 @@ public class JobSeekerTests {
                 .role(Role.JOBSEEKER)
                 .address(address)
                 .phoneNumber("123-456-7890")
-                .username("johndoe123")
                 .password("password123")
                 .age(25)
                 .gender(Gender.MALE);

@@ -1,0 +1,68 @@
+  :root {
+    --secondary-color: #05284b;
+  }
+
+  .prev-button:hover,
+  .next-button:hover,
+  .sign-out-button:hover {
+    background-color: var(--secondary-color) !important;   
+    color: #ffffff !important;
+    transform: scale(1.1);    
+  }
+
+.role-btn:hover {
+  background-color: var(--secondary-color) !important;   
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.role-btn:hover h3 {
+  color: #ffffff !important; 
+}
+
+.prev-button, .next-button, .sign-out-button {
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
+.role-btn {
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
+
+.role-btn h3 {
+  transition: color .5s ease !important;
+}
+
+.role-btn:active {
+    transform: scale(1.5) !important; 
+}
+
+/* Mobile/small screens: add 100vh */
+@media (max-width: 767px) {
+  .responsive-vh {
+    margin-top: 20px;
+    height: 100vh;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row; /* default: button right of title */
+}
+
+@media (max-width: 600px) {
+  .section-header {
+    flex-direction: column; /* stack vertically */
+    align-items: center;    /* center everything */
+    text-align: center;     /* center text */
+  }
+
+  .section-header button {
+    order: -1;              /* move button above the title */
+    margin-bottom: 0.5rem;  /* spacing between button and title */
+  }
+}
+
+

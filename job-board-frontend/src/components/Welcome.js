@@ -2,10 +2,10 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, create
 import { useState } from "react";
 import { app } from "../auth/firebase.js";
 import { getAuth } from "firebase/auth";
-import Typewriter from "./typewritter.tsx";
 import { useNavigate } from "react-router-dom";
 import { ProcessError, ValidateSignup } from "../utils/utils.js";
 import "./Welcome.css";
+import TypewriterBanner from "./TypewriterBanner.js";
 
 function Welcome() {
   const [email, setEmail] = useState("");
@@ -47,19 +47,7 @@ function Welcome() {
         <div className="d-flex flex-column align-items-center">
 
           {/* Typewriter Effect */}
-          <Typewriter
-            text={[
-              "Discover Jobs and Unlock Your Potential",
-              "Connect with Top Employers",
-              "Your Dream Job Awaits",
-            ]}
-            speed={65}
-            waitTime={2000}
-            deleteSpeed={50}
-            initialDelay={100}
-            cursorChar={"|"}
-            className="custom-typewriter mb-4"
-          />
+          <TypewriterBanner />
 
           {/* Logo */}
           <img

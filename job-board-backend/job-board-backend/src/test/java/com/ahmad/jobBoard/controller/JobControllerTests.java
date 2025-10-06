@@ -53,7 +53,6 @@ public class JobControllerTests {
                 .role(Role.EMPLOYER)
                 .description("Test description")
                 .industry(Industry.TECHNOLOGY)
-                .username("username123")
                 .password("password123")
                 .build();
 

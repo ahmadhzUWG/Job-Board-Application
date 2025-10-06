@@ -62,7 +62,6 @@ public class JobApplicationControllerTests {
                 .phoneNumber("123-456-7890")
                 .name("Test Company")
                 .industry(Industry.TECHNOLOGY)
-                .username("username123")
                 .password("password123")
                 .build();
         job = Job.builder()
@@ -82,7 +81,6 @@ public class JobApplicationControllerTests {
                 .role(Role.JOBSEEKER)
                 .address(address)
                 .phoneNumber("123-456-7890")
-                .username("johndoe123")
                 .password("password123")
                 .age(25)
                 .gender(Gender.MALE)

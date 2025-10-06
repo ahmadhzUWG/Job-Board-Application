@@ -42,11 +42,6 @@ public abstract class User {
     private String email;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
-    @Size(min = 5, message = "Username must be at least 5 characters")
-    private String username;
-
-    @NotBlank
     @Column(nullable = false)
     @Size(min = 8, message = "Password must be at least 8 characters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

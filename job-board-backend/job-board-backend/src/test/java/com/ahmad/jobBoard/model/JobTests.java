@@ -63,7 +63,6 @@ public class JobTests {
                 .phoneNumber("123-456-7890")
                 .name("Test Company")
                 .industry(Industry.TECHNOLOGY)
-                .username("username123")
                 .password("password123")
                 .build();
     }

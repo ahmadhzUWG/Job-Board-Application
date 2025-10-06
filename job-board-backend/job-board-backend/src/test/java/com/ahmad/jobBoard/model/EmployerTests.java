@@ -82,14 +82,6 @@ public class EmployerTests {
         assertHasViolation(employer, "address");
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @ValueSource(strings = "123")
-    void invalidUsername_shouldFailValidation(String username) {
-        Employer employer = (Employer) baseBuilder().username(username).build();
-        assertHasViolation(employer, "username");
-    }
-
     @Test
     void invalidRole_shouldFailValidation() {
         Employer employer = (Employer) baseBuilder().role(null).build();
@@ -117,7 +109,6 @@ public class EmployerTests {
                 .phoneNumber("123-456-7890")
                 .name("Test Company")
                 .industry(Industry.TECHNOLOGY)
-                .username("username123")
                 .password("password123");
     }
 

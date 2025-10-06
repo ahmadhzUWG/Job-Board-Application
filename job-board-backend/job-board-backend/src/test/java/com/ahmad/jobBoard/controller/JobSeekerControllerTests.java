@@ -51,7 +51,6 @@ public class JobSeekerControllerTests {
         jobSeeker = JobSeeker.builder()
                 .id(1L)
                 .name("John Doe")
-                .username("johndoe")
                 .password("password123")
                 .email("john.doe@example.com")
                 .role(Role.JOBSEEKER)
@@ -98,7 +97,6 @@ public class JobSeekerControllerTests {
         {
           "id": 1,
           "name": "John Doe",
-          "username": "johndoe",
           "password": "password123",
           "email": "john.doe@example.com",
           "role": "JOBSEEKER",
