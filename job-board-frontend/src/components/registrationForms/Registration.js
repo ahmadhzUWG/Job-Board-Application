@@ -13,8 +13,6 @@ import ReviewSlide from "./ReviewSlide.js";
 
 
 function Registration() {
-  const formRef = useRef(null);
-  const auth = getAuth(app);
   const location = useLocation();
   const { email, password, fromSignup } = location.state || { fromSignup: false };
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -34,7 +32,7 @@ function Registration() {
     age: 0,
     gender: "",
     resumeUrl: "",
-    profileImageUrl: "", // Will be added later
+    profileImageUrl: "", 
   });
 
   if (!fromSignup) {

@@ -1,11 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { CardBody, Button } from "react-bootstrap";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import api from '../../api/axiosConfig.js';
+import { uploadFileToS3 } from "../../utils/utils.js";
 
 import "./Slide.css";
 
 function ReviewSlide({ userData, swiperInstance }) {
+    const navigate = useNavigate();
 
     const createUser = async (userData, role) => {
         try {
@@ -43,12 +46,12 @@ function ReviewSlide({ userData, swiperInstance }) {
             role: userData.role,
             email: userData.email,
             password: userData.password,
-            profileImageUrl: userData.profileImageUrl,
+            profileImageUrl: await uploadFileToS3(userData.profileImageFile)
         }
         if (userData.role === "JOBSEEKER") {
             createdUserData.age = Number(userData.age);
             createdUserData.gender = userData.gender;
-            createdUserData.resumeUrl = userData.resumeUrl;
+            createdUserData.resumeUrl = await uploadFileToS3(userData.resumeFile);
         } else if (userData.role === "EMPLOYER") {
             createdUserData.industry = userData.industry;
             createdUserData.description = userData.description;
@@ -57,12 +60,15 @@ function ReviewSlide({ userData, swiperInstance }) {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, userData.email, userData.password)
             .then(async (userCredential) => {
-                // Signed in 
+                try {
+                    await createUser(createdUserData, userData.role);
+                } catch (error) {
+                    console.error("Error creating user in backend:", error);
+                }
+                
                 const user = userCredential.user;
                 console.log("User created in Firebase:", user);
-
-                await createUser(createdUserData, userData.role);
-                window.location.replace("/dashboard");
+                navigate("/dashboard", { replace: true });
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -120,9 +126,9 @@ function ReviewSlide({ userData, swiperInstance }) {
                     {userData.description && (
                         <p><strong>Description:</strong> {userData.description}</p>
                     )}
-                    {userData.profileImageUrl && (
+                    {userData.profileImageFile && (
                         <img
-                            src={userData.profileImageUrl}
+                            src={URL.createObjectURL(userData.profileImageFile)}
                             alt="Profile"
                             style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover", border: "2px solid #fff" }}
                         />

@@ -45,7 +45,7 @@ function JobSeekerSlide({ userData, setUserData, swiperInstance }) {
                                 value={userData.gender || ""}
                                 onChange={(e) => {
                                     setUserData(prev => ({ ...prev, gender: e.target.value }));
-                                    e.target.setCustomValidity(""); 
+                                    e.target.setCustomValidity("");
                                 }}
                                 onInvalid={(e) => e.target.setCustomValidity("Please select a gender.")} // custom message
                                 required
@@ -67,12 +67,9 @@ function JobSeekerSlide({ userData, setUserData, swiperInstance }) {
                                     accept=".pdf,.doc,.docx"  // allows pdf and word files
                                     onChange={async (e) => {
                                         const file = e.target.files[0];
-                                        if (!file) return;
-
-                                        // Upload to backend
-                                        const formData = new FormData();
-                                        formData.append("file", file);
-                                        setUserData(prev => ({ ...prev, resumeUrl: URL.createObjectURL(file) }));
+                                        if (file) {
+                                            setUserData(prev => ({ ...prev, resumeFile: file }));
+                                        }
                                     }}
                                 />
                             </div>

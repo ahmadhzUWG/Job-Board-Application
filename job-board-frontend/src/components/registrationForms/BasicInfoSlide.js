@@ -32,18 +32,19 @@ function BasicInfoSlide({ userData, setUserData, swiperInstance }) {
                                     id="profileImage"
                                     accept="image/*"
                                     className="form-control"
-                                    onChange={(e) => {
+                                    onChange={async (e) => {
                                         const file = e.target.files[0];
                                         if (file) {
-                                            setUserData(prev => ({ ...prev, profileImageUrl: URL.createObjectURL(file) }));
+                                            setUserData(prev => ({ ...prev, profileImageFile: file }));
                                         }
                                     }}
                                 />
 
-                                {userData.profileImageUrl && (
+                                {userData.profileImageFile && (
                                     <img
-                                        src={userData.profileImageUrl}
+                                        src={URL.createObjectURL(userData.profileImageFile)}
                                         alt="Profile Preview"
+                                        crossOrigin="anonymous" 
                                         className="mt-4"
                                         style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%", border: "2px solid #fff" }}
                                     />
