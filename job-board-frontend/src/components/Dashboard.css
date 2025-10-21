@@ -1,0 +1,21 @@
+  :root {
+    --secondary-color: #05284b;
+    --primary-color: #042341;
+  }
+
+  .dashboard-button:hover {
+    background-color: var(--secondary-color) !important;   
+    color: #ffffff !important;
+    transform: scale(1.05);    
+  }
+
+.dashboard-button {
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+  background-color: #FFFFFF !important; 
+  font-weight: bold !important;
+  font-size: 20px !important;
+  color: var(--primary-color) !important;
+}
+
+
+

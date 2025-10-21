@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { app } from "../../auth/firebase.js";
-import { getAuth } from "firebase/auth";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
