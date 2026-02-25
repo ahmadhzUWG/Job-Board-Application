@@ -1,5 +1,44 @@
 import api from '../api/axiosConfig';
 
+export async function fetchRole(user, role) {
+  if (!user || !user.email) return null;
+
+  try {
+    await api.get(`/employers/${user.email}`);
+    return "EMPLOYER";
+  } catch (err) {
+    console.log(user.email, "Email not found in employers");
+  }
+
+  try {
+    await api.get(`/job-seekers/${user.email}`);
+    return "EMPLOYER";
+  } catch (err) {
+    console.log(user.email, ": Email not found in Job Seekers");
+  }
+
+  return null;
+}
+
+export async function fetchUserByEmail(email) {
+  if (!email) return null;
+
+  try {
+    const response = await api.get(`/employers/${email}`);
+    return response.data;
+  } catch (err) {
+    console.log(email, "Email not found in employers");
+  }
+
+  try {
+    const response = await api.get(`/job-seekers/${email}`);
+    return response.data;
+  } catch (err) {
+    console.log(email, ": Email not found in Job Seekers");
+  }
+  return null;
+}
+
 export function ProcessError(error, setError) {
   setError(error.code);
 

@@ -3,13 +3,16 @@ package com.ahmad.jobBoard.controller;
 import com.ahmad.jobBoard.model.Job;
 import com.ahmad.jobBoard.service.JobService;
 import jakarta.validation.Valid;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -34,10 +37,23 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<Job> createJob(@Valid @RequestBody Job job, Errors errors) {
+    public ResponseEntity<?> createJob(@Valid @RequestBody Job job, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().build();
+            List<String> messages = errors.getAllErrors()
+                    .stream()
+                    .map(error -> {
+                        if (error instanceof FieldError) {
+                            FieldError fe = (FieldError) error;
+                            return fe.getField() + ": " + fe.getDefaultMessage();
+                        } else {
+                            return error.getDefaultMessage();
+                        }
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(messages);
         }
+
+
 
         return new ResponseEntity<>(jobService.createJob(job), HttpStatus.CREATED);
     }
