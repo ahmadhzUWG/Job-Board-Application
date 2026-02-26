@@ -11,13 +11,14 @@ import Registration from './components/registrationForms/Registration';
 import PostJob from './components/PostJob';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Dashboard from './components/Dashboard';
-import { fetchRole } from './utils/utils';
+import { fetchRole, fetchUserByEmail } from './utils/utils';
 
 function App() {
 
   const [user, setUser] = useState(undefined);
   const [role, setRole] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   // For fetching jobs to display in JobBoard
   useEffect(() => {
@@ -45,18 +46,21 @@ function App() {
     };
   }, []);
 
-  // For fetching user role
+  // For fetching user role and id
   useEffect(() => {
     if (!user) return;
 
     let isMounted = true;
 
-    const loadRole = async () => {
-      const result = await fetchRole(user); 
-      if (isMounted) setRole(result);
+    const loadIdAndRole = async () => {
+      const userObj = await fetchUserByEmail(user.email);
+      if (isMounted) {
+        setUserId(userObj.id);
+        setRole(userObj.role);
+      }
     };
 
-    loadRole();
+    loadIdAndRole();
 
     return () => {
       isMounted = false;
@@ -74,6 +78,7 @@ function App() {
             <Route path="/" element={user === undefined ? null : user ? (<Navigate to="/dashboard" replace />) : (<Welcome />)} />
             <Route path="/jobs" element={<JobBoard jobs={jobs} />} />
             <Route path="/jobs/post" element={role === null ? (<div className='text-center mt-5 text-light fs-1'>Loading...</div>) : role === "EMPLOYER" ? ( <PostJob />) : (<Navigate to="/dashboard" replace />)}/>
+            <Route path="/my-jobs" element={role === null ? (<div className='text-center mt-5 text-light fs-1'>Loading...</div>) : role === "EMPLOYER" ? ( <JobBoard jobs={jobs.filter(job => job.employer.id === userId)} />) : (<Navigate to="/dashboard" replace />)}/>
             <Route path="/about" element={<div className='text-center mt-5 text-light fs-1'><h1>About Page</h1><p>This is a job board application built with React and Firebase.</p></div>} />
             <Route path="/dashboard" element={user === undefined ? null : user ? <Dashboard /> : <Navigate to="/" replace />} />
             <Route path="/registration" element={<Registration />} />

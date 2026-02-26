@@ -41,6 +41,12 @@ public class EmployerController {
         return new ResponseEntity<>(employerService.createEmployer(employer), HttpStatus.CREATED);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Employer> updateEmployer(@PathVariable Long id, @RequestBody Employer updatedFields) {
+
+        return new ResponseEntity<>(employerService.updateEmployer(id, updatedFields), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployer(@PathVariable Long id) {
         employerService.deleteEmployer(id);

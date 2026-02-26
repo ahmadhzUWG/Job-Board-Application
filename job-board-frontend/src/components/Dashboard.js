@@ -58,7 +58,9 @@ function Dashboard() {
 
             <div className="row">
               <div className="col-md-6 my-2">
-                <button className="btn dashboard-button w-100">My Jobs</button>
+                <Link to="/my-jobs">
+                  <button className="btn dashboard-button w-100">My Jobs</button>
+                </Link>
               </div>
               <div className="col-md-6 my-2">
                 <button className="btn dashboard-button w-100">Settings</button>
