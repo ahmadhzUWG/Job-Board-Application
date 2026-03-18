@@ -43,7 +43,7 @@ public abstract class User {
 
     @NotBlank
     @Column(nullable = false)
-    @Size(min = 8, message = "Password must be at least 8 characters")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password; //hashed
 

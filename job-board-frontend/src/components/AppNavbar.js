@@ -50,7 +50,7 @@ function AppNavbar() {
                 onClick={() => {
                   const auth = getAuth(app);
                   auth.signOut().then(() =>
-                    window.location.reload()
+                    navigate("/", { replace: true })
                   ).catch((error) =>
                     console.error("Error signing out:", error));
                 }}>

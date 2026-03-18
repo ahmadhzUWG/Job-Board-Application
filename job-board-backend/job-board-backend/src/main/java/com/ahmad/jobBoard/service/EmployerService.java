@@ -1,5 +1,6 @@
 package com.ahmad.jobBoard.service;
 
+import com.ahmad.jobBoard.model.Address;
 import com.ahmad.jobBoard.model.Employer;
 import com.ahmad.jobBoard.repository.EmployerRepository;
 import jakarta.validation.Valid;
@@ -52,7 +53,23 @@ public class EmployerService {
         }
 
         if (updatedFields.getAddress() != null) {
-            existing.setAddress(updatedFields.getAddress());
+            Address updatedAddress = updatedFields.getAddress();
+            Address existingAddress = existing.getAddress();
+
+            if (updatedAddress.getAddress1() != null)
+                existingAddress.setAddress1(updatedAddress.getAddress1());
+
+            if (updatedAddress.getAddress2() != null)
+                existingAddress.setAddress2(updatedAddress.getAddress2());
+
+            if (updatedAddress.getCity() != null)
+                existingAddress.setCity(updatedAddress.getCity());
+
+            if (updatedAddress.getState() != null)
+                existingAddress.setState(updatedAddress.getState());
+
+            if (updatedAddress.getZip() != null)
+                existingAddress.setZip(updatedAddress.getZip());
         }
 
         if  (updatedFields.getPhoneNumber() != null && !updatedFields.getPhoneNumber().isBlank()) {

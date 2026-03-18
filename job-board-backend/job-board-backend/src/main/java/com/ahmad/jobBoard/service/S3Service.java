@@ -7,6 +7,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
@@ -34,6 +35,18 @@ public class S3Service {
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)))
                 .build();
+    }
+
+    public void deleteProfileImage(String fileUrl) {
+        // Extract key from URL
+        String key = fileUrl.substring(fileUrl.indexOf(".com/") + 5);
+
+        DeleteObjectRequest request = DeleteObjectRequest.builder()
+                .bucket("ahmad-job-board")
+                .key(key)
+                .build();
+
+        s3Client.deleteObject(request);
     }
 
     public String uploadFile(MultipartFile file) throws IOException {

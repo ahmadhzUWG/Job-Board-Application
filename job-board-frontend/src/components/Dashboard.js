@@ -23,7 +23,7 @@ function Dashboard() {
     loadRole();
 
     return () => { isMounted = false; };
-    
+
   }, [user]);
 
   return (
@@ -63,21 +63,19 @@ function Dashboard() {
                 </Link>
               </div>
               <div className="col-md-6 my-2">
-                <button className="btn dashboard-button w-100">Settings</button>
+                <Link to="/settings">
+                  <button className="btn dashboard-button w-100">Settings</button>
+                </Link>
               </div>
             </div>
-
           </div>
         </div>
-
-
-
-
       }
+
       {role === "JOBSEEKER" &&
         <h1>Job Seeker Dashboard</h1>
       }
-    </div>
+    </div >
   )
 }
 

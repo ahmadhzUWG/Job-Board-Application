@@ -127,8 +127,8 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
       return false;
     }
 
-    if (password.length < 8) {
-      setError("Password is too weak. Use at least 8 characters.");
+    if (password.length < 6) {
+      setError("Password is too weak. Use at least 6 characters.");
       return false;
     }
 
@@ -142,7 +142,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
     formData.append('file', file);
 
     try {
-      const response = await api.post('/upload', formData, {
+      const response = await api.post('/file', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -153,4 +153,16 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
       return null;
     }
 
+  }
+
+  export async function deleteFileFromS3(profileImageUrl) {
+    if (!profileImageUrl) return false;
+
+    try {
+      await api.delete('/file', { params: { fileUrl: profileImageUrl } });
+      return true;
+    } catch (error) {
+      console.error("Error deleting file:", error.response?.data || error);
+      return false;
+    }
   }

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/upload")
-public class FileUploadController {
+@RequestMapping("/api/file")
+public class FileController {
 
     @Autowired
     private S3Service s3Service;
@@ -21,5 +21,11 @@ public class FileUploadController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Upload failed: " + e.getMessage());
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteFile(@RequestParam String fileUrl) {
+        s3Service.deleteProfileImage(fileUrl);
+        return ResponseEntity.noContent().build();
     }
 }
