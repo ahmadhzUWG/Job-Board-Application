@@ -26,7 +26,7 @@ public class EmployerController {
         return new ResponseEntity<>(employerService.allEmployers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<Employer> getEmployerByEmail(@PathVariable  String email) {
         return employerService.findEmployerByEmail(email)
                 .map(ResponseEntity::ok)

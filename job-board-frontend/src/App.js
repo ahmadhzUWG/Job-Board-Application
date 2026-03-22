@@ -79,7 +79,7 @@ function App() {
             <Route path="/" element={user === undefined ? null : user ? (<Navigate to="/dashboard" replace />) : (<Welcome />)} />
             <Route path="/jobs" element={<JobBoard jobs={jobs} />} />
             <Route path="/jobs/post" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? ( <PostJob />) : (<Navigate to="/dashboard" replace />)}/>
-            <Route path="/my-jobs" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? ( <JobBoard jobs={jobs.filter(job => job.employer.id === userId)} />) : (<Navigate to="/dashboard" replace />)}/>
+            <Route path="/my-jobs" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? ( <JobBoard jobs={jobs.filter(job => job.employer.id === userId || job.employer === userId)} userId={userId} showHeader={false} />) : (<Navigate to="/dashboard" replace />)}/>
             <Route path="/settings" element={role === null ? (<Navigate to="/" replace />) : <Settings />} />
             <Route path="/about" element={<div className='text-center mt-5 text-light fs-1'><h1>About Page</h1><p>This is a job board application built with React and Firebase.</p></div>} />
             <Route path="/dashboard" element={user === undefined ? null : user ? <Dashboard /> : <Navigate to="/" replace />} />

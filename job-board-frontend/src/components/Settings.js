@@ -37,7 +37,7 @@ function Settings() {
     const [currentPassword, setCurrentPassword] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [address, setAddress] = React.useState(userObj?.address || '');
+    const [address, setAddress] = React.useState(userObj?.address || {});
     const [phone, setPhone] = React.useState(userObj?.phoneNumber || '');
     const [profileImageUrl, setProfileImageUrl] = React.useState(userObj?.profileImageUrl || '');
     const [newProfileImageFile, setNewProfileImageFile] = React.useState(null);
@@ -64,6 +64,22 @@ function Settings() {
         }
     }, [userObj]);
 
+    useEffect(() => {
+        if (value === "1" && userObj) {
+            setName(userObj.name || '');
+            setDescription(userObj.description || '');
+            setIndustry(userObj.industry || industries[0]);
+            setAddress(userObj.address || {});
+            setPhone(userObj.phoneNumber || '');
+            setProfileImageUrl(userObj.profileImageUrl || '');
+        }
+
+        if (value === "2") {
+            setCurrentPassword('');
+            setPassword('');
+            setConfirmPassword('');
+        }
+    }, [value, userObj]);
 
     const handleUpdateName = async (e) => {
         e.preventDefault();

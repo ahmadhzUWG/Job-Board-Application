@@ -53,10 +53,29 @@ public class JobController {
             return ResponseEntity.badRequest().body(messages);
         }
 
-
-
         return new ResponseEntity<>(jobService.createJob(job), HttpStatus.CREATED);
     }
+
+    @PutMapping
+    public ResponseEntity<?> updateJob(@Valid @RequestBody Job job, Errors errors) {
+        if (errors.hasErrors()) {
+            List<String> messages = errors.getAllErrors()
+                    .stream()
+                    .map(error -> {
+                        if (error instanceof FieldError) {
+                            FieldError fe = (FieldError) error;
+                            return fe.getField() + ": " + fe.getDefaultMessage();
+                        }
+                        return error.getDefaultMessage();
+                    })
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.badRequest().body(messages);
+        }
+
+        return new ResponseEntity<>(jobService.createJob(job), HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJob(@PathVariable Long id) {

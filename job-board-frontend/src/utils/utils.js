@@ -25,15 +25,15 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
     if (!user || !user.email) return null;
 
     try {
-      await api.get(`/employers/${user.email}`);
+      await api.get(`/employers/email/${user.email}`);
       return "EMPLOYER";
     } catch (err) {
       console.log(user.email, "Email not found in employers");
     }
 
     try {
-      await api.get(`/job-seekers/${user.email}`);
-      return "EMPLOYER";
+      await api.get(`/job-seekers/email/${user.email}`);
+      return "JOB_SEEKER";
     } catch (err) {
       console.log(user.email, ": Email not found in Job Seekers");
     }
@@ -45,17 +45,17 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
     if (!email) return null;
 
     try {
-      const response = await api.get(`/employers/${email}`);
+      const response = await api.get(`/employers/email/${email}`);
       return response.data;
     } catch (err) {
-      console.log(email, "Email not found in employers");
+      console.log("Error fetching employer by email:", err.response?.data || err);
     }
 
     try {
-      const response = await api.get(`/job-seekers/${email}`);
+      const response = await api.get(`/job-seekers/email/${email}`);
       return response.data;
     } catch (err) {
-      console.log(email, ": Email not found in Job Seekers");
+      console.log("Error fetching job seeker by email:", err.response?.data || err);
     }
     return null;
   }
@@ -107,7 +107,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
     }
 
     try {
-      const response1 = await api.get(`/employers/${email}`);
+      const response1 = await api.get(`/employers/email/${email}`);
       setError("Email already in use. Please log in instead.");
       return false;
     } catch (err) {
@@ -115,7 +115,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
     }
 
     try {
-      const response1 = await api.get(`/job-seekers/${email}`);
+      const response1 = await api.get(`/job-seekers/email/${email}`);
       setError("Email already in use. Please log in instead.");
       return false;
     } catch (err) {

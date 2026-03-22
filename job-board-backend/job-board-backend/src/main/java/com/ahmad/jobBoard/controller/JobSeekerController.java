@@ -27,7 +27,7 @@ public class JobSeekerController {
         return new ResponseEntity<>(jobSeekerService.allJobSeekers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<JobSeeker> getJobSeekerByEmail(@PathVariable String email) {
         return jobSeekerService.findJobSeekerByEmail(email)
                 .map(ResponseEntity::ok)
