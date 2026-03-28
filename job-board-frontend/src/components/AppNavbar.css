@@ -1,0 +1,7 @@
+#basic-nav-dropdown + .dropdown-menu {
+  background-color: #042341 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #093f75 !important;
+}

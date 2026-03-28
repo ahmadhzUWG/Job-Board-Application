@@ -1,14 +1,33 @@
 import React from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { useEffect, useState } from 'react';
+import { fetchRole } from "../utils/utils.js";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { app } from "../auth/firebase.js";
 import { getAuth } from "firebase/auth";
-import { useNavigate, useLocation } from "react-router-dom";
+import "./AppNavbar.css";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import "./registrationForms/Slide.css"
 
 function AppNavbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const user = getAuth().currentUser;
+  const [role, setRole] = useState('');
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadRole = async () => {
+      const userRole = await fetchRole(user);
+      if (isMounted) setRole(userRole);
+    }
+
+    loadRole();
+
+    return () => { isMounted = false; };
+
+  }, [user]);
 
   const onRegistrationPage = location.pathname === "/registration";
 
@@ -16,10 +35,10 @@ function AppNavbar() {
     e.preventDefault();
 
     if (onRegistrationPage) {
-      navigate("/", { replace: true }); 
+      navigate("/", { replace: true });
       console.log("Navigating to home from registration page");
     } else {
-      navigate("/"); 
+      navigate("/");
     }
   };
 
@@ -41,8 +60,12 @@ function AppNavbar() {
         <Navbar.Collapse id="basic-navbar-nav" >
           <Nav className="ms-auto align-items-center">
             <Nav.Link as="span" onClick={handleHomeClick} style={{ color: "white", cursor: "pointer" }}>Home</Nav.Link>
-            <Nav.Link href="/jobs" style={{ color: "white" }}>Jobs</Nav.Link>
-            <Nav.Link href="/about" style={{ color: "white" }}>About</Nav.Link>
+            <NavDropdown title={<span style={{ color: "white" }}>Jobs</span>} id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/jobs" style={{ color: "white" }}>Browse Jobs</NavDropdown.Item>
+              {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/jobs/post" style={{ color: "white" }}>Post Job</NavDropdown.Item>}
+              {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/my-jobs" style={{ color: "white" }}>My Jobs</NavDropdown.Item>}
+            </NavDropdown>
+            <Nav.Link as={Link} to="/about" style={{ color: "white" }}>About</Nav.Link>
             {
               getAuth().currentUser
               &&
