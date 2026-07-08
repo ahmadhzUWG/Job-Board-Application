@@ -295,6 +295,7 @@ function JobSeekerSettings() {
                       const file = e.target.files[0];
                       if (file) {
                         setNewProfileImageFile(file);
+                        setProfileImageFile(file);
                       }
                     }}
                   />
