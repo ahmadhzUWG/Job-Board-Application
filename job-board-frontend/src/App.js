@@ -14,6 +14,7 @@ import Dashboard from './components/Dashboard';
 import {fetchUserByEmail } from './utils/utils';
 import EmployerSettings from './components/EmployerSettings';
 import JobSeekerSettings from './components/JobSeekerSettings';
+import JobApplication from './components/JobApplication';
 
 function App() {
 
@@ -85,6 +86,7 @@ function App() {
             <Route path="/about" element={<div className='text-center mt-5 text-light fs-1'><h1>About Page</h1><p>This is a job board application built with React and Firebase.</p></div>} />
             <Route path="/dashboard" element={user === undefined ? null : user ? <Dashboard /> : <Navigate to="/" replace />} />
             <Route path="/registration" element={<Registration />} />
+            <Route path="/apply/:jobId" element={role === null ? (<Navigate to="/" replace />) : role === "JOB_SEEKER" ? (<JobApplication />) : (<Navigate to="/dashboard" replace />)} />
             <Route path="*" element={<div className='text-center mt-5 text-light fs-1'><h1>404 Not Found</h1><p>The page you are looking for does not exist.</p></div>} />
           </Routes>
         </BrowserRouter>

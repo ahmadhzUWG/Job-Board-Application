@@ -2,11 +2,37 @@ import React from 'react';
 import EditJob from './EditJob.js';
 import api from '../api/axiosConfig.js';
 import { useNavigate } from "react-router-dom";
+import { fetchRole } from '../utils/utils.js';
+import { getAuth } from "firebase/auth";
+import { useEffect, useState } from 'react';
 
 function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const [isJobSeeker, setIsJobSeeker] = useState(false);
+    const [hasNotApplied, setHasNotApplied] = useState(true);
     const isRemote = job.remote;
     const isOwner = userId && job.employer.id === userId || job.employer === userId;
     const navigate = useNavigate();
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const checkIfJobSeeker = async () => {
+            const jobApplications = await api.get('/job-applications');
+            const userRole = await fetchRole(user);
+            if (isMounted) {
+                setIsJobSeeker(userRole === "JOB_SEEKER");
+                setHasNotApplied(!jobApplications?.some(application => application.job_id === job.id && application.applicant_id === userId));
+            }
+        }
+
+        checkIfJobSeeker();
+
+        return () => { isMounted = false; };
+
+    }, [user]);
+
 
     if (isEditing) {
         return <EditJob job={job} onClose={onCancel} />;
@@ -45,8 +71,8 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
 
                             {isOwner && (
                                 <div className="d-flex justify-content-center gap-2">
-                                        <button type="button" className="btn" style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }} onClick={onEdit}>
-                                            Edit
+                                    <button type="button" className="btn" style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }} onClick={onEdit}>
+                                        Edit
                                     </button>
                                     <button
                                         type="button"
@@ -58,6 +84,18 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
                                     </button>
                                 </div>
                             )}
+
+                            {isJobSeeker && (
+                                <button
+                                    type="button"
+                                    className="btn"
+                                    onClick={() => navigate(`/apply/${job.id}`)}
+                                    style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }}
+                                >
+                                    {hasNotApplied ? "Apply" : "Already Applied"}
+                                </button>
+                            )}
+
                         </div>
                     </div>
                 </div>
