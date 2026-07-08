@@ -65,6 +65,7 @@ function AppNavbar() {
               {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/jobs/post" style={{ color: "white" }}>Post Job</NavDropdown.Item>}
               {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/my-jobs" style={{ color: "white" }}>My Jobs</NavDropdown.Item>}
             </NavDropdown>
+            <Nav.Link as={Link} to="/settings" style={{ color: "white" }}>Settings</Nav.Link>
             <Nav.Link as={Link} to="/about" style={{ color: "white" }}>About</Nav.Link>
             {
               getAuth().currentUser

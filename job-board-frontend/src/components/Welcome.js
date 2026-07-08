@@ -31,7 +31,7 @@ function Welcome() {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in successfully");
 
-      navigate("/jobs", { replace: true });
+      navigate("/dashboard", { replace: true });
     }
     catch (error) {
       console.error("Error logging in:", error);

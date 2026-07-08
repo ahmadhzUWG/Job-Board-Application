@@ -42,6 +42,11 @@ public class JobSeekerController {
         return new ResponseEntity<>(jobSeekerService.createJobSeeker(jobSeeker), HttpStatus.CREATED);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<JobSeeker> updateJobSeeker(@PathVariable Long id, @RequestBody JobSeeker jobSeeker) {
+        return new ResponseEntity<>(jobSeekerService.updateJobSeeker(id, jobSeeker), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJobSeeker(@PathVariable Long id) {
         jobSeekerService.deleteJobSeeker(id);

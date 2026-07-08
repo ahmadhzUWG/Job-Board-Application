@@ -6,7 +6,6 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -78,7 +77,7 @@ public class JobApplicationTests {
         jobSeeker = JobSeeker.builder()
                 .name("John Doe")
                 .email("john.doe@example.com")
-                .role(Role.JOBSEEKER)
+                .role(Role.JOB_SEEKER)
                 .address(address)
                 .phoneNumber("123-456-7890")
                 .password("password123")

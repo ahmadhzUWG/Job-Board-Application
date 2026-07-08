@@ -39,7 +39,7 @@ public class LoadDatabase {
             Address address3 = createAddress("414 Central Dr", "Decatur", State.GA, "30455");
             address2.setAddress2("Apt 112");
             JobSeeker jobSeeker1 = createJobSeeker("Ahmad Hammett", address3, "987-654-3210", "test@gmail.com"
-                    , "password", Role.JOBSEEKER, 22, Gender.MALE);
+                    , "password", Role.JOB_SEEKER, 22, Gender.MALE);
             JobApplication jobApp1 = createJobApplication(job1, jobSeeker1, ApplicationStatus.APPLIED);
 
             log.info("Preloading {}", employerRepo.save(employer2));

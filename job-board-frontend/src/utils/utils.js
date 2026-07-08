@@ -3,6 +3,9 @@ import { updatePassword } from "firebase/auth";
 
 export async function changeUserFields(firebaseUser, userObj, updatedFields) {
   try {
+    console.log("Updating user fields with:", updatedFields);
+    console.log("Current user object:", userObj);
+
     if (userObj.role === "EMPLOYER") {
       await api.patch(`/employers/${userObj.id}`, updatedFields);
     } else if (userObj.role === "JOB_SEEKER") {
@@ -26,6 +29,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
 
     try {
       await api.get(`/employers/email/${user.email}`);
+      console.log(user.email, "Email found in employers");
       return "EMPLOYER";
     } catch (err) {
       console.log(user.email, "Email not found in employers");
@@ -33,6 +37,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
 
     try {
       await api.get(`/job-seekers/email/${user.email}`);
+      console.log(user.email, "Email found in Job Seekers");
       return "JOB_SEEKER";
     } catch (err) {
       console.log(user.email, ": Email not found in Job Seekers");
@@ -46,6 +51,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
 
     try {
       const response = await api.get(`/employers/email/${email}`);
+      console.log("User found in employers with email:", email);
       return response.data;
     } catch (err) {
       console.log("Error fetching employer by email:", err.response?.data || err);
@@ -53,6 +59,7 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
 
     try {
       const response = await api.get(`/job-seekers/email/${email}`);
+      console.log("User found in job seekers with email:", email);
       return response.data;
     } catch (err) {
       console.log("Error fetching job seeker by email:", err.response?.data || err);
@@ -155,11 +162,14 @@ export async function changeUserFields(firebaseUser, userObj, updatedFields) {
 
   }
 
-  export async function deleteFileFromS3(profileImageUrl) {
-    if (!profileImageUrl) return false;
+  export async function deleteFileFromS3(url) {
+    if (!url) return false;
 
     try {
-      await api.delete('/file', { params: { fileUrl: profileImageUrl } });
+      const requestUrl = `/file?fileUrl=${encodeURIComponent(url)}`;
+      console.log("Request URL:", requestUrl);
+
+      await api.delete('/file', { params: { fileUrl: url } });
       return true;
     } catch (error) {
       console.error("Error deleting file:", error.response?.data || error);

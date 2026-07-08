@@ -6,7 +6,7 @@ import { fetchUserByEmail, changeUserFields, deleteFileFromS3, uploadFileToS3 } 
 import { getAuth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 
 
-function Settings() {
+function EmployerSettings() {
 
     const industries = [
         "TECHNOLOGY",
@@ -29,6 +29,7 @@ function Settings() {
     const auth = getAuth();
     const email = auth.currentUser?.email;
 
+    const [imageCooldown, setImageCooldown] = React.useState(0);
     const [userObj, setUserObj] = React.useState(null);
     const [value, setValue] = React.useState('1');
     const [name, setName] = React.useState(userObj?.name || '');
@@ -42,6 +43,48 @@ function Settings() {
     const [profileImageUrl, setProfileImageUrl] = React.useState(userObj?.profileImageUrl || '');
     const [newProfileImageFile, setNewProfileImageFile] = React.useState(null);
     const [profileImageFile, setProfileImageFile] = React.useState(null);
+
+    useEffect(() => {
+        const restoreCooldown = (key, setFn) => {
+            const savedEndTime = localStorage.getItem(key);
+
+            if (savedEndTime) {
+                const remaining = Math.floor((savedEndTime - Date.now()) / 1000);
+
+                if (remaining > 0) {
+                    setFn(remaining);
+                } else {
+                    localStorage.removeItem(key);
+                }
+            }
+        };
+
+        restoreCooldown("imageCooldownEnd", setImageCooldown);
+    }, []);
+
+    useEffect(() => {
+        const runTimer = (cooldown, setFn, key) => {
+            if (cooldown <= 0) return;
+
+            const timer = setInterval(() => {
+                setFn(prev => {
+                    if (prev <= 1) {
+                        localStorage.removeItem(key);
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(timer);
+        };
+
+        const imageTimer = runTimer(imageCooldown, setImageCooldown, "imageCooldownEnd");
+
+        return () => {
+            imageTimer && imageTimer();
+        };
+    }, [imageCooldown]);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -101,6 +144,8 @@ function Settings() {
     const handleUpdateProfileImageUrl = async (e) => {
         e.preventDefault();
 
+        if (imageCooldown > 0) return;
+
         const isConfirmed = window.confirm('Are you sure you want to update your profile image?');
 
         if (isConfirmed) {
@@ -110,6 +155,12 @@ function Settings() {
             const newUrl = await uploadFileToS3(newProfileImageFile);
             await changeUserFields(auth.currentUser, userObj, { profileImageUrl: newUrl })
             setProfileImageUrl(newUrl);
+            setProfileImageFile(newProfileImageFile);
+            setNewProfileImageFile(null);
+
+            const endTime = Date.now() + 30000;
+            localStorage.setItem("imageCooldownEnd", endTime);
+            setImageCooldown(30);
         }
     };
 
@@ -255,8 +306,8 @@ function Settings() {
                                         }
                                     }}
                                 />
-                                <Button type="submit" variant="contained" color="primary" disabled={!newProfileImageFile}>
-                                    Update
+                                <Button type="submit" variant="contained" color="primary" disabled={!newProfileImageFile || imageCooldown > 0}>
+                                    {imageCooldown > 0 ? `Wait ${imageCooldown}s` : "Update"}
                                 </Button>
                             </Box>
                         </form>
@@ -338,7 +389,7 @@ function Settings() {
                         </form>
 
                         <form onSubmit={handleUpdateAddress}>
-                            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
+                            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2, outline: "1px solid #c0c0c0", borderRadius: "4px", padding: "16px" }}>
                                 <TextField
                                     label="Address Line 1"
                                     required
@@ -448,4 +499,4 @@ function Settings() {
 }
 
 
-export default Settings
+export default EmployerSettings

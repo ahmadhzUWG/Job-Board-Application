@@ -78,7 +78,7 @@ public class JobApplicationControllerTests {
         jobSeeker = JobSeeker.builder().id(20L)
                 .name("John Doe")
                 .email("john.doe@example.com")
-                .role(Role.JOBSEEKER)
+                .role(Role.JOB_SEEKER)
                 .address(address)
                 .phoneNumber("123-456-7890")
                 .password("password123")

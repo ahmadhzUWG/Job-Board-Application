@@ -53,7 +53,7 @@ public class JobSeekerControllerTests {
                 .name("John Doe")
                 .password("password123")
                 .email("john.doe@example.com")
-                .role(Role.JOBSEEKER)
+                .role(Role.JOB_SEEKER)
                 .phoneNumber("123-456-7890")
                 .address(address)
                 .age(25)

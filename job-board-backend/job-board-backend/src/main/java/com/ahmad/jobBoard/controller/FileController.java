@@ -25,7 +25,7 @@ public class FileController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteFile(@RequestParam String fileUrl) {
-        s3Service.deleteProfileImage(fileUrl);
+        s3Service.deleteFile(fileUrl);
         return ResponseEntity.noContent().build();
     }
 }

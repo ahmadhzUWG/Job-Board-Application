@@ -10,11 +10,9 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
-import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.UUID;
 
 @Service
@@ -37,7 +35,7 @@ public class S3Service {
                 .build();
     }
 
-    public void deleteProfileImage(String fileUrl) {
+    public void deleteFile(String fileUrl) {
         // Extract key from URL
         String key = fileUrl.substring(fileUrl.indexOf(".com/") + 5);
 

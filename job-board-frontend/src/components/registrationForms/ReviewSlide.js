@@ -51,6 +51,7 @@ function ReviewSlide({ userData, swiperInstance }) {
         if (userData.role === "JOBSEEKER") {
             createdUserData.age = Number(userData.age);
             createdUserData.gender = userData.gender;
+            createdUserData.description = userData.description;
             createdUserData.resumeUrl = await uploadFileToS3(userData.resumeFile);
         } else if (userData.role === "EMPLOYER") {
             createdUserData.industry = userData.industry;
@@ -62,13 +63,13 @@ function ReviewSlide({ userData, swiperInstance }) {
             .then(async (userCredential) => {
                 try {
                     await createUser(createdUserData, userData.role);
+                    const user = userCredential.user;
+                    console.log("User created in Firebase:", user);
+                    navigate("/dashboard", { replace: true });
                 } catch (error) {
                     console.error("Error creating user in backend:", error);
                 }
-                
-                const user = userCredential.user;
-                console.log("User created in Firebase:", user);
-                navigate("/dashboard", { replace: true });
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -146,7 +147,7 @@ function ReviewSlide({ userData, swiperInstance }) {
                         <>
                             <p><strong>Age:</strong> {userData.age}</p>
                             <p><strong>Gender:</strong> {userData.gender}</p>
-                            <p><strong>Resume URL:</strong> {userData.resumeUrl}</p>
+                            <p><strong>Resume File:</strong> {userData.resumeFile ? userData.resumeFile.name : "No file uploaded"}</p>
                         </>
                     ) : (
                         <>

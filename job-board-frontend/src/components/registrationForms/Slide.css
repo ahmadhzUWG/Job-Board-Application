@@ -33,9 +33,6 @@
   transition: color .5s ease !important;
 }
 
-.role-btn:active {
-    transform: scale(1.5) !important; 
-}
 
 /* Mobile/small screens: add 100vh */
 @media (max-width: 767px) {
