@@ -45,12 +45,14 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
 
                             {isOwner && (
                                 <div className="d-flex justify-content-center gap-2">
-                                    <button className="btn btn-primary" onClick={onEdit}>
-                                        Edit
+                                        <button type="button" className="btn" style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }} onClick={onEdit}>
+                                            Edit
                                     </button>
                                     <button
-                                        className="btn btn-danger"
+                                        type="button"
+                                        className="btn"
                                         onClick={handleDeleteJob}
+                                        style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }}
                                     >
                                         Delete
                                     </button>
