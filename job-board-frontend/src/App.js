@@ -19,9 +19,9 @@ import JobApplication from './components/JobApplication';
 function App() {
 
   const [user, setUser] = useState(undefined);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState(undefined);
   const [jobs, setJobs] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(undefined);
 
   // For fetching jobs to display in JobBoard
   useEffect(() => {
@@ -79,7 +79,7 @@ function App() {
           <AppNavbar />
           <Routes>
             <Route path="/" element={user === undefined ? null : user ? (<Navigate to="/dashboard" replace />) : (<Welcome />)} />
-            <Route path="/jobs" element={<JobBoard jobs={jobs} />} />
+            <Route path="/jobs" element={userId === undefined ? <div>Loading...</div> : (<JobBoard jobs={jobs} userId={userId} />)} />
             <Route path="/jobs/post" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? ( <PostJob />) : (<Navigate to="/dashboard" replace />)}/>
             <Route path="/my-jobs" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? ( <JobBoard jobs={jobs.filter(job => job.employer.id === userId || job.employer === userId)} userId={userId} showHeader={false} />) : (<Navigate to="/dashboard" replace />)}/>
             <Route path="/settings" element={role === null ? (<Navigate to="/" replace />) : role === "EMPLOYER" ? (<EmployerSettings />) : (<JobSeekerSettings />)} />

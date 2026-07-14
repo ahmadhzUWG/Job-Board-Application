@@ -8,6 +8,12 @@ function JobApplication() {
     const user = auth.currentUser;
     const params = useParams();
     const jobId = params.jobId;
+    const [application, setApplication] = useState({
+        job: {},
+        applicant: {},
+        status: '',
+        appliedDate: ''
+    });
 
     return (
         <div>

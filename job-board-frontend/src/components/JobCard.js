@@ -1,7 +1,7 @@
 import React from 'react';
 import EditJob from './EditJob.js';
 import api from '../api/axiosConfig.js';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { fetchRole } from '../utils/utils.js';
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from 'react';
@@ -13,18 +13,29 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
     const [hasNotApplied, setHasNotApplied] = useState(true);
     const isRemote = job.remote;
     const isOwner = userId && job.employer.id === userId || job.employer === userId;
+    const [jobApplications, setJobApplications] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
 
         const checkIfJobSeeker = async () => {
-            const jobApplications = await api.get('/job-applications');
-            const userRole = await fetchRole(user);
-            if (isMounted) {
-                setIsJobSeeker(userRole === "JOB_SEEKER");
-                setHasNotApplied(!jobApplications?.some(application => application.job_id === job.id && application.applicant_id === userId));
+            try {
+                const response = await api.get(`/job-applications`);
+                const applications = response.data;
+                setJobApplications(applications);
+
+                const userRole = await fetchRole(user);
+                if (isMounted) {
+                    setIsJobSeeker(userRole === "JOB_SEEKER");
+                    setHasNotApplied(!applications?.some(application => application.job.id === job.id && application.applicant.id === userId));
+                }
             }
+            catch (error) {
+                console.error("Error fetching job applications:", error);
+            }
+
+
         }
 
         checkIfJobSeeker();
@@ -86,14 +97,17 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
                             )}
 
                             {isJobSeeker && (
-                                <button
-                                    type="button"
-                                    className="btn"
-                                    onClick={() => navigate(`/apply/${job.id}`)}
-                                    style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }}
-                                >
-                                    {hasNotApplied ? "Apply" : "Already Applied"}
-                                </button>
+                                <>
+                                    <button
+                                        type="button"
+                                        className="btn"
+                                        onClick={() => navigate(`/apply/${job.id}`)}
+                                        style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }}
+                                        disabled={!hasNotApplied}
+                                    >
+                                        {hasNotApplied ? "Apply" : "Already Applied"}
+                                    </button>
+                                </>
                             )}
 
                         </div>
