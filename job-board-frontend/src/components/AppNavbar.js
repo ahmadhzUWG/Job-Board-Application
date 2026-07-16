@@ -62,6 +62,7 @@ function AppNavbar() {
             <Nav.Link as="span" onClick={handleHomeClick} style={{ color: "white", cursor: "pointer" }}>Home</Nav.Link>
             <NavDropdown title={<span style={{ color: "white" }}>Jobs</span>} id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/jobs" style={{ color: "white" }}>Browse Jobs</NavDropdown.Item>
+              {role === "JOB_SEEKER" && <NavDropdown.Item as={Link} to="/my-applications" style={{ color: "white" }}>My Applications</NavDropdown.Item>}
               {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/jobs/post" style={{ color: "white" }}>Post Job</NavDropdown.Item>}
               {role === "EMPLOYER" && <NavDropdown.Item as={Link} to="/my-jobs" style={{ color: "white" }}>My Jobs</NavDropdown.Item>}
             </NavDropdown>

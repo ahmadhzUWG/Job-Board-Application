@@ -4,8 +4,8 @@ import { getAuth } from "firebase/auth";
 import { fetchRole } from "../utils/utils.js";
 
 import './Dashboard.css';
-import EmployerDashboard from './EmployerDashboard.js';
-import JobSeekerDashboard from './JobSeekerDashboard.js';
+import EmployerDashboard from './employerForms/EmployerDashboard.js';
+import JobSeekerDashboard from './jobSeekerForms/JobSeekerDashboard.js';
 
 function Dashboard() {
   const auth = getAuth();

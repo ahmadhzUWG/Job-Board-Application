@@ -3,9 +3,9 @@ import { CardBody, ToggleButton } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { useState } from 'react';
-import api from '../api/axiosConfig.js';
-import { fetchUserByEmail } from '../utils/utils.js';
-import JobAddress from './JobAddress.js';
+import api from '../../api/axiosConfig.js';
+import { fetchUserByEmail } from '../../utils/utils.js';
+import JobAddress from '../registrationForms/JobAddress.js';
 
 function PostJob() {
     const navigate = useNavigate();

@@ -1,12 +1,13 @@
 import React from 'react';
-import EditJob from './EditJob.js';
+import EditJob from './employerForms/EditJob.js';
 import api from '../api/axiosConfig.js';
 import { useNavigate, Link } from "react-router-dom";
 import { fetchRole } from '../utils/utils.js';
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from 'react';
+import { applyForJob, deleteJobApplication } from '../utils/utils.js';
 
-function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
+function JobCard({ job, userId, isEditing, onEdit, onCancel, removeApplication }) {
     const auth = getAuth();
     const user = auth.currentUser;
     const [isJobSeeker, setIsJobSeeker] = useState(false);
@@ -49,6 +50,50 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
         return <EditJob job={job} onClose={onCancel} />;
     }
 
+    const handleDeleteApplication = async (e) => {
+        e.preventDefault();
+
+        const isConfirmed = window.confirm("Are you sure you want to delete this application?");
+        if (!isConfirmed) return;
+
+        try {
+            const applicationToDelete = jobApplications.find(application => application.job.id === job.id && application.applicant.id === userId);
+            if (applicationToDelete) {
+                await deleteJobApplication(applicationToDelete.id);
+                setHasNotApplied(true);
+                alert("Application deleted successfully!");
+                if (removeApplication) {
+                    removeApplication(job.id);
+                }
+            }
+        } catch (error) {
+            console.error("Error deleting application:", error);
+        }
+    }
+
+    const handleApply = async (e) => {
+        e.preventDefault();
+
+        const isConfirmed = window.confirm("Are you sure you want to apply for this job?");
+        if (!isConfirmed) return;
+
+        try {
+            await applyForJob(job.id, userId);
+
+            const response = await api.get(`/job-applications`);
+            const applications = response.data;
+            const appliedJobs = applications
+                .filter(application => application.applicant.id === userId)
+                .map(application => application.job);
+
+            setJobApplications(applications);
+            setHasNotApplied(false);
+            alert("Application submitted successfully!");
+        } catch (error) {
+            console.error("Error applying for job:", error);
+        }
+    }
+
     const handleDeleteJob = async (e) => {
         e.preventDefault();
 
@@ -58,7 +103,6 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
         try {
             await api.delete(`/jobs/${job.id}`);
             console.log("Job deleted successfully");
-            window.location.reload();
         } catch (error) {
             console.error("Error deleting job:", error);
         }
@@ -98,15 +142,42 @@ function JobCard({ job, userId, isEditing, onEdit, onCancel }) {
 
                             {isJobSeeker && (
                                 <>
+                                    <div className="d-flex justify-content-center gap-2 position-relative">
+                                        {!hasNotApplied && (
+                                            <>
+                                                <img
+                                                    src="/assets/checkicon.svg"
+                                                    alt="Check Icon"
+                                                    width="20"
+                                                    height="20"
+                                                    className="position-absolute top-50 end-0 translate-middle-y"
+                                                />
+
+                                                <button
+                                                    type="button"
+                                                    className="btn"
+                                                    onClick={handleDeleteApplication}
+                                                    style={{ backgroundColor: window.SECONDARY_COLOR, color: "white" }}
+                                                >
+                                                    Delete Application
+                                                </button>
+                                            </>
+
+                                        )}
+
+
+                                    </div>
+
                                     <button
                                         type="button"
                                         className="btn"
-                                        onClick={() => navigate(`/apply/${job.id}`)}
-                                        style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white' }}
-                                        disabled={!hasNotApplied}
+                                        onClick={handleApply}
+                                        style={{ backgroundColor: window.SECONDARY_COLOR, color: 'white', display: hasNotApplied ? 'inline-block' : 'none' }}
                                     >
-                                        {hasNotApplied ? "Apply" : "Already Applied"}
+                                        Apply
                                     </button>
+
+
                                 </>
                             )}
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { Button, TextField, Tab, Box, Select } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { fetchUserByEmail, changeUserFields, deleteFileFromS3, uploadFileToS3 } from '../utils/utils.js';
+import { fetchUserByEmail, changeUserFields, deleteFileFromS3, uploadFileToS3 } from '../../utils/utils.js';
 import { getAuth, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 
 function JobSeekerSettings() {

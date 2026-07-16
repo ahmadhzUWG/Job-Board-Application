@@ -1,6 +1,35 @@
 import api from '../api/axiosConfig';
 import { updatePassword } from "firebase/auth";
 
+export async function deleteJobApplication(applicationId) {
+  try {
+    await api.delete(`/job-applications/${applicationId}`);
+    console.log("Job application deleted successfully");
+  } catch (error) {
+    console.error("Error deleting job application:", error.response?.data || error);
+    throw error;
+  }
+}
+
+export async function applyForJob(jobId, userId) {
+  try {
+    const applicationData = {
+      job: { id: jobId },
+      applicant: { id: userId },
+      status: 'APPLIED',
+      appliedDate: new Date().toISOString().slice(0, 19)
+    };
+
+    const response = await api.post('/job-applications', applicationData);
+    console.log("Job application submitted successfully:", response.data);
+    return response.data;
+
+  } catch (error) {
+    console.error("Error applying for job:", error.response?.data || error);
+    throw error;
+  }
+}
+
 export async function changeUserFields(firebaseUser, userObj, updatedFields) {
   try {
     console.log("Updating user fields with:", updatedFields);

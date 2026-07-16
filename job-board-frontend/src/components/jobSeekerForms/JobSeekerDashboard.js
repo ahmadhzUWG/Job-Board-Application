@@ -27,7 +27,9 @@ function JobSeekerDashboard() {
                 </Link>
               </div>
               <div className="col-md-6 my-2">
-                <button className="btn dashboard-button w-100">My Applications</button>
+                <Link to="/my-applications">
+                  <button className="btn dashboard-button w-100">My Applications</button>
+                </Link>
               </div>
             </div>
 
@@ -38,6 +40,7 @@ function JobSeekerDashboard() {
                 </Link>
               </div>
             </div>
+
           </div>
         </div>
   )
